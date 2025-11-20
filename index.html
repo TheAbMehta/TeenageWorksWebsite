@@ -12,6 +12,19 @@
       background: #000;
       color: #fff;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Lorenz Attractor Background */
+    #lorenz-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.3;
+      pointer-events: none;
     }
 
     /* Glass Nav */
@@ -184,6 +197,7 @@
   </style>
 </head>
 <body>
+  <canvas id="lorenz-bg"></canvas>
   <div class="navbar">
     <img src="logo-small.png" class="logo-small" alt="Logo">
     <div class="nav-links">
@@ -238,7 +252,7 @@
 
   <section class="reveal" id="contact">
     <h2>Contact</h2>
-    <p>Email: <a class="contact-link" href="mailto:contact@gmail.com">contact@teenage.works</a></p>
+    <p>Email: <a class="contact-link" href="mailto:contact@teenage.works">contact@teenage.works</a></p>
   </section>
 
   <footer>
@@ -246,6 +260,63 @@
   </footer>
 
   <script>
+    // Lorenz Attractor Background Animation
+    const canvas = document.getElementById("lorenz-bg");
+    const ctx = canvas.getContext("2d");
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Lorenz variables
+    let x = 0.1, y = 0, z = 0;
+    const sigma = 15;
+    const rho = 20;
+    const beta = 8/3;
+
+    let prevX = null;
+    let prevY = null;
+
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+    ctx.lineWidth = 1.2;
+
+    function draw() {
+      for (let i = 0; i < 8; i++) {
+        const dt = 0.01;
+        const dx = sigma * (y - x) * dt;
+        const dy = (x * (rho - z) - y) * dt;
+        const dz = (x * y - beta * z) * dt;
+
+        x += dx;
+        y += dy;
+        z += dz;
+
+        const scale = 8;
+        const px = x * scale + canvas.width / 2;
+        const py = z * scale + canvas.height / 2 - canvas.height * 0.4;
+
+        if (prevX !== null) {
+          ctx.beginPath();
+          ctx.moveTo(prevX, prevY);
+          ctx.lineTo(px, py);
+          ctx.stroke();
+        }
+
+        prevX = px;
+        prevY = py;
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    // Scroll reveal functionality
     const reveals = document.querySelectorAll('.reveal');
 
     function revealOnScroll() {
