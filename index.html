@@ -118,7 +118,7 @@
     }
 
     /* ---------- Visualizer styles (merged & responsive) ---------- */
-    :root{ --viz-bg:#050505; --card:#0b0b0d; --muted:#a3b8ce; --accent:#dddddd; --glass:rgba(255,255,255,0.04); --slider-track:#222; --slider-thumb:#fff }
+    :root{ --viz-bg:#050505; --card:#0b0b0d; --muted:#b2beb5; --accent:#dddddd; --glass:rgba(255,255,255,0.04); --slider-track:#222; --slider-thumb:#fff }
 
     .viz-section {
       padding: 40px 6vw;
@@ -159,14 +159,12 @@
 
     .note { color:var(--muted); font-size:13px; margin-top:8px; }
 
-    #pandora-logo { position:absolute; right:12px; top:12px; width:110px; opacity:0.85; pointer-events:none; }
     #manim-guy { position:absolute; bottom:10px; left:10px; width:120px; opacity:0.95; pointer-events:none; }
 
     @media(max-width:900px){
       .stage { flex-direction:column; gap:22px; }
       .sidebar { width:100%; }
       #scene { aspect-ratio: 1 / 1; }
-      #pandora-logo { width:85px; top:8px; right:8px; }
       #manim-guy { width:90px; bottom:8px; left:8px; }
       .equationOverlay{ font-size:15px; padding:4px 8px; }
     }
