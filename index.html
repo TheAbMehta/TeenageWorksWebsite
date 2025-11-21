@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teenage Works</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Teenage Works — Pandora Visualizer</title>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <style>
+    /* ---------- Landing page base ---------- */
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Courier New', monospace;
+      font-family: Inter, system-ui, 'Courier New', monospace;
       background: #000;
       color: #fff;
       overflow-x: hidden;
@@ -23,8 +26,9 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      opacity: 0.3;
+      opacity: 0.28;
       pointer-events: none;
+      background: black;
     }
 
     /* Glass Nav */
@@ -36,7 +40,7 @@
       width: 82%;
       padding: 15px 25px;
       background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.12);
       backdrop-filter: blur(12px);
       border-radius: 20px;
       display: flex;
@@ -60,16 +64,6 @@
       white-space: nowrap;
     }
 
-    .nav-links a[href="#about"] {
-      margin-right: 16px;
-    }
-
-    .nav-links a:hover {
-      opacity: 0.6;
-      letter-spacing: 1px;
-    }
-
-    /* Pandora Button */
     .pandora-btn {
       padding: 10px 20px;
       background: #fff;
@@ -79,133 +73,119 @@
       transition: 0.3s;
     }
 
-    .pandora-btn:hover {
-      background: #ddd;
-      transform: translateY(-2px);
-    }
+    .logo-small { height: 40px; user-select: none; }
 
-    .logo-small {
-      height: 40px;
-      user-select: none;
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInNav { from { opacity: 0; transform: translate3d(-50%, 20px, 0); } to { opacity: 1; transform: translate3d(-50%, 0, 0); } }
+    @keyframes floatUp { 0% { transform: translateY(0); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    header { padding: 140px 20px 40px; text-align: center; animation: fadeIn 1.3s ease-out; }
+    .logo-img { width: 200px; height: auto; animation: floatUp 4s ease-in-out infinite; user-select: none; }
 
-    @keyframes fadeInNav {
-      from { opacity: 0; transform: translate3d(-50%, 20px, 0); }
-      to { opacity: 1; transform: translate3d(-50%, 0, 0); }
-    }
+    section { padding: 80px 20px; max-width: 1000px; margin: auto; animation: fadeIn 1.5s ease-out; }
 
-    @keyframes floatUp {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0); }
-    }
-
-    header {
-      padding: 140px 20px 40px;
-      text-align: center;
-      animation: fadeIn 1.3s ease-out;
-    }
-
-    .logo-img {
-      width: 200px;
-      height: auto;
-      animation: floatUp 4s ease-in-out infinite;
-      user-select: none;
-    }
-
-    section {
-      padding: 80px 20px;
-      max-width: 900px;
-      margin: auto;
-      animation: fadeIn 1.5s ease-out;
-    }
-
-    h1, h2 {
-      font-weight: bold;
-    }
+    h1, h2 { font-weight: bold; color: #fff; }
 
     .feature-box {
-      border: 2px solid #fff;
+      border: 2px solid rgba(255,255,255,0.12);
       padding: 25px;
       border-radius: 16px;
       margin-bottom: 30px;
       animation: fadeIn 1.6s ease-out;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(255,255,255,0.02);
     }
+    .feature-box:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 0 20px rgba(255,255,255,0.06); }
 
-    .feature-box:hover {
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
-    }
-
-    .team-container {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 30px;
-    }
-
+    .team-container { display:flex; gap:20px; flex-wrap:wrap; margin-top:30px; }
     .team-card {
-      flex: 1;
-      min-width: 240px;
-      background: rgba(255,255,255,0.07);
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 16px;
+      flex:1; min-width: 240px; background: rgba(255,255,255,0.03);
+      padding: 20px; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
       transition: 0.3s;
     }
+    .team-card:hover { transform: translateY(-6px); box-shadow: 0 0 20px rgba(255,255,255,0.06); }
 
-    .team-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 20px rgba(255,255,255,0.25);
-    }
+    .contact-link { color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.18); padding-bottom: 2px; transition: opacity 0.3s; }
+    .contact-link:hover { opacity: 0.7; }
 
-    .contact-link {
-      color: #fff;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.4);
-      padding-bottom: 2px;
-      transition: opacity 0.3s;
-    }
+    footer { text-align: center; padding: 60px 20px; opacity: 0.6; animation: fadeIn 2s ease-out; }
 
-    .contact-link:hover {
-      opacity: 0.7;
-    }
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    footer {
-      text-align: center;
-      padding: 60px 20px;
-      opacity: 0.6;
-      animation: fadeIn 2s ease-out;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease-out;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Mobile responsive adjustments */
     @media (max-width: 768px) {
-      #team,
-      #contact {
-        padding: 40px 20px;
-      }
+      #team, #contact { padding: 40px 20px; }
+    }
+
+    /* ---------- Visualizer styles (merged & responsive) ---------- */
+    :root{ --viz-bg:#050505; --card:#0b0b0d; --muted:#a3b8ce; --accent:#dddddd; --glass:rgba(255,255,255,0.04); --slider-track:#222; --slider-thumb:#fff }
+
+    .viz-section {
+      padding: 40px 6vw;
+      max-width: 1200px;
+      margin: 40px auto;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .viz-header { margin-bottom: 10px; }
+    .viz-title { font-size: 2rem; margin: 0 0 6px; font-weight:700; color: var(--accent); }
+    .viz-sub { margin: 0 0 14px; color: var(--muted); }
+
+    .problem-selector { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+    .problem-btn {
+      background: linear-gradient(180deg,var(--card),#0a0a0a);
+      border:1px solid rgba(255,255,255,0.03);
+      padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600;color:#e9eef6;
+    }
+    .problem-btn.active{ box-shadow:0 6px 20px rgba(109,106,255,0.12); border-color:var(--accent); color:var(--accent) }
+
+    .stage{ display:flex; gap:18px; align-items:flex-start; }
+    .sidebar{ width:260px; flex-shrink:0; padding:14px; box-sizing:border-box; }
+    .slider-block{ margin-bottom:18px; }
+    .slider-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-family: monospace; }
+
+    input[type=range]{ -webkit-appearance:none; width:100%; height:6px; background:transparent; }
+    input[type=range]::-webkit-slider-runnable-track{ height:4px; background:var(--slider-track); border-radius:999px; }
+    input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; margin-top:-7px; width:12px; height:12px; border-radius:50%; background:var(--slider-thumb); box-shadow:0 4px 10px rgba(0,0,0,0.5) }
+    .range-wrap{ position:relative; }
+    .range-fill { position:absolute; left:0; top:50%; transform:translateY(-50%); height:6px; border-radius:999px; background:linear-gradient(90deg,var(--accent),#aab0ff); pointer-events:none; width:0 }
+
+    .canvas-frame { flex:1; position:relative; min-width:0; }
+    /* canvas responsive using aspect-ratio, JS synchronizes internal pixel size */
+    #scene { width:100%; height:auto; aspect-ratio: 16/10; background:#030304; border-radius:12px; border:1px solid rgba(255,255,255,0.03); display:block; }
+
+    .equationOverlay { position:absolute; left:50%; top:18px; transform:translateX(-50%); color:#fff; font-family:serif; font-size:18px; background:rgba(0,0,0,0.25); padding:6px 10px; border-radius:8px; z-index:20; pointer-events:none; }
+
+    .note { color:var(--muted); font-size:13px; margin-top:8px; }
+
+    #pandora-logo { position:absolute; right:12px; top:12px; width:110px; opacity:0.85; pointer-events:none; }
+    #manim-guy { position:absolute; bottom:10px; left:10px; width:120px; opacity:0.95; pointer-events:none; }
+
+    @media(max-width:900px){
+      .stage { flex-direction:column; gap:22px; }
+      .sidebar { width:100%; }
+      #scene { aspect-ratio: 1 / 1; }
+      #pandora-logo { width:85px; top:8px; right:8px; }
+      #manim-guy { width:90px; bottom:8px; left:8px; }
+      .equationOverlay{ font-size:15px; padding:4px 8px; }
+    }
+
+    @media(max-width:450px){
+      #scene { aspect-ratio: 1 / 1.2; }
+    }
+
+    /* small tweaks to avoid navbar overlap on very short screens */
+    @media(max-height:560px){
+      header { padding-top: 90px; }
     }
   </style>
 </head>
 <body>
+  <!-- Lorenz background canvas -->
   <canvas id="lorenz-bg"></canvas>
+
+  <!-- Navbar -->
   <div class="navbar">
     <img src="logo-small.png" class="logo-small" alt="Logo">
     <div class="nav-links">
@@ -215,49 +195,65 @@
     </div>
   </div>
 
+  <!-- Hero -->
   <header id="home">
     <img src="logo.png" alt="Teenage Works Logo" class="logo-img">
   </header>
 
+  <!-- About -->
   <section class="reveal" id="about">
     <h1>Building High-End ML Products — By Teenagers</h1>
-    <p>
-      Teenage Works is a group of young builders designing powerful, consumer-grade ML products.
-      The ambition: to show how far teenagers can push real engineering, real AI, and real-world impact.
-      Everything is built from scratch — fast, clean, and with our signature monochrome aesthetic.
-    </p>
+    <p>Teenage Works is a group of young builders designing powerful, consumer-grade ML products. The ambition: to show how far teenagers can push real engineering, real AI, and real-world impact.</p>
   </section>
 
+  <!-- Pandora -->
   <section class="reveal" id="pandora">
     <h2>Pandora — EdTech, Re-Imagined</h2>
-    <div class="feature-box reveal">
-      <p>Pandora generates Manim animations for *any* STEM doubt — completely AI-generated and consistent.</p>
-    </div>
-    <div class="feature-box reveal">
-      <p>Includes a curated, indexed, reference-linked library from top YouTubers and collaborators.</p>
-    </div>
-    <div class="feature-box reveal">
-      <p>Students can save handwritten notes, summaries, and personalized learning trails.</p>
-    </div>
-    <div class="feature-box reveal">
-      <p>Our custom .pandora file format merges LaTeX + Manim into interactive DPPs and notes.</p>
-    </div>
+    <div class="feature-box reveal"><p>Pandora generates Manim animations for any STEM doubt — AI-assisted and consistent.</p></div>
+    <div class="feature-box reveal"><p>Curated, indexed library from top YouTubers and collaborators.</p></div>
+    <div class="feature-box reveal"><p>Students save handwritten notes, summaries, and personalized learning trails.</p></div>
+    <div class="feature-box reveal"><p>Custom .pandora file format merges LaTeX + Manim into interactive DPPs and notes.</p></div>
   </section>
 
+  <!-- Team -->
   <section class="reveal" id="team">
     <h2>Meet the Team</h2>
     <div class="team-container">
       <div class="team-card">
         <h3>Vyom Nishant Patel</h3>
-        <p>ML engineer, systems designer, and creator of Pandora’s core architecture. Builds LNNs, navigation AI, and experimental models.</p>
+        <p>ML engineer, systems designer, and creator of Pandora’s core architecture.</p>
       </div>
       <div class="team-card">
         <h3>Abhisar Mehta</h3>
-        <p>ML enthusiast, lead developer across both backend and frontend systems. Focused on integrated tooling, pipeline architecture, and interactive file-rendering platforms.</p>
+        <p>Lead developer across backend & frontend systems, focused on interactive file-rendering platforms.</p>
       </div>
     </div>
   </section>
 
+  <!-- ========== NEW: Interactive Pandora Visualizer (merged) ========== -->
+  <section class="viz-section" id="visualizer">
+    <div class="viz-header">
+      <div class="viz-title">Interactive Pandora Visualizer</div>
+      <div class="viz-sub">Interactive playground to visualize common maths and physics problems. (Responsive for desktop & mobile)</div>
+    </div>
+
+    <div class="problem-selector" id="problemSelector"></div>
+
+    <div class="stage">
+      <div class="sidebar" id="sidebar"></div>
+
+      <div class="canvas-frame">
+        <div id="equationOverlay" class="equationOverlay">\(\text{Select a problem}\)</div>
+        <!-- visualizer canvas -->
+        <canvas id="scene" width="900" height="520"></canvas>
+        <img id="pandora-logo" src="pandoralogo.png" alt="pandora logo"/>
+        <img id="manim-guy" src="piman.png" alt="manim guy"/>
+        <div class="note">Grid units map to math units; origin (0,0) is at canvas center.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact (keeps as requested: Visualizer inserted before contact/footer) -->
   <section class="reveal" id="contact">
     <h2>Contact</h2>
     <p>Email: <a class="contact-link" href="mailto:contact@teenage.works">contact@teenage.works</a></p>
@@ -268,76 +264,414 @@
   </footer>
 
   <script>
-    // Lorenz Attractor Background Animation
-    const canvas = document.getElementById("lorenz-bg");
-    const ctx = canvas.getContext("2d");
+    /* ---------- Lorenz Attractor Background (renamed vars to avoid conflicts) ---------- */
+    const lorenzCanvas = document.getElementById("lorenz-bg");
+    const lorenzCtx = lorenzCanvas.getContext("2d");
 
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function lorenzResize() {
+      lorenzCanvas.width = window.innerWidth;
+      lorenzCanvas.height = window.innerHeight;
+      lorenzCtx.fillStyle = "black";
+      lorenzCtx.fillRect(0, 0, lorenzCanvas.width, lorenzCanvas.height);
+      // subtle clearing so trace fades slowly - create a slight transparent overlay each resize
     }
-    resize();
-    window.addEventListener('resize', resize);
+    lorenzResize();
+    window.addEventListener('resize', lorenzResize);
 
     // Lorenz variables
-    let x = 0.1, y = 0, z = 0;
-    const sigma = 15;
-    const rho = 20;
-    const beta = 8/3;
+    let lx = 0.1, ly = 0, lz = 0;
+    const sigma = 15, rho = 20, beta = 8/3;
+    let lprevX = null, lprevY = null;
+    lorenzCtx.strokeStyle = "rgba(255, 255, 255, 0.28)";
+    lorenzCtx.lineWidth = 1.2;
 
-    let prevX = null;
-    let prevY = null;
+    function drawLorenz() {
+      // fade older traces slightly to create continuous effect
+      lorenzCtx.fillStyle = "rgba(0,0,0,0.02)";
+      lorenzCtx.fillRect(0, 0, lorenzCanvas.width, lorenzCanvas.height);
 
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
-    ctx.lineWidth = 1.2;
-
-    function draw() {
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 6; i++) {
         const dt = 0.01;
-        const dx = sigma * (y - x) * dt;
-        const dy = (x * (rho - z) - y) * dt;
-        const dz = (x * y - beta * z) * dt;
+        const dx = sigma * (ly - lx) * dt;
+        const dy = (lx * (rho - lz) - ly) * dt;
+        const dz = (lx * ly - beta * lz) * dt;
 
-        x += dx;
-        y += dy;
-        z += dz;
+        lx += dx; ly += dy; lz += dz;
 
-        const scale = 8;
-        const px = x * scale + canvas.width / 2;
-        const py = z * scale + canvas.height / 2 - canvas.height * 0.4;
+        const scale = Math.min(window.innerWidth, window.innerHeight) * 0.014;
+        const px = lx * scale + lorenzCanvas.width / 2;
+        const py = lz * scale + lorenzCanvas.height / 2 - lorenzCanvas.height * 0.34;
 
-        if (prevX !== null) {
-          ctx.beginPath();
-          ctx.moveTo(prevX, prevY);
-          ctx.lineTo(px, py);
-          ctx.stroke();
+        if (lprevX !== null) {
+          lorenzCtx.beginPath();
+          lorenzCtx.moveTo(lprevX, lprevY);
+          lorenzCtx.lineTo(px, py);
+          lorenzCtx.stroke();
         }
-
-        prevX = px;
-        prevY = py;
+        lprevX = px; lprevY = py;
       }
-
-      requestAnimationFrame(draw);
+      requestAnimationFrame(drawLorenz);
     }
+    drawLorenz();
 
-    draw();
-
-    // Scroll reveal functionality
+    /* ---------- Scroll reveal functionality ---------- */
     const reveals = document.querySelectorAll('.reveal');
-
     function revealOnScroll() {
       for (let el of reveals) {
         const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 80) {
-          el.classList.add('visible');
-        }
+        if (rect.top < window.innerHeight - 80) el.classList.add('visible');
+      }
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    /* ---------- Visualizer JS ---------- */
+    // Grab elements after DOM load
+    const canvas = document.getElementById('scene');
+    const ctx = canvas.getContext('2d');
+
+    // Start with displayed dimensions; JS keeps canvas pixel size synced
+    let W = 900, H = 520;
+    let scale = 40;          // px per math-unit (will be recalculated)
+    let animStart = Date.now();
+    let time = 0;
+    let current = 'projectile';
+
+    // Resize: sync canvas pixel dimensions to its displayed size and adjust math scale
+    function vizResize(){
+      const rect = canvas.getBoundingClientRect();
+      // set internal pixel buffer to match displayed size (for crispness on high-dpi, we could multiply by devicePixelRatio if desired)
+      W = canvas.width  = Math.max(300, Math.floor(rect.width));
+      H = canvas.height = Math.max(200, Math.floor(rect.height));
+
+      // choose scale proportional to width; this keeps graph aspect correct and prevents squish
+      // We aim to show roughly 25 math-units across the width on desktop; adjust for mobile smaller widths
+      const targetUnitsAcross = Math.max(16, Math.min(30, W / 40)); // heuristic
+      scale = W / targetUnitsAcross;
+    }
+
+    window.addEventListener('resize', vizResize);
+    vizResize();
+
+    // coordinate transforms
+    function screen(x,y){ return { x: W/2 + x*scale, y: H/2 - y*scale }; }
+
+    function drawGrid(){
+      // background
+      ctx.fillStyle = '#030304';
+      ctx.fillRect(0,0,W,H);
+
+      // grid lines
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+      ctx.lineWidth = 1;
+
+      // vertical lines: start from canvas center offset
+      const offsetX = (W/2) % scale;
+      for(let x=offsetX; x<W; x+=scale){
+        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+      }
+      const offsetY = (H/2) % scale;
+      for(let y=offsetY; y<H; y+=scale){
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+      }
+      // origin dot
+      const o = screen(0,0);
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(o.x,o.y,3,0,Math.PI*2); ctx.fill();
+    }
+
+    function annotatePoint(x,y,label){
+      const p = screen(x,y);
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(p.x,p.y,4,0,Math.PI*2); ctx.fill();
+      ctx.font = '12px monospace';
+      ctx.fillText(label, p.x + 8, p.y - 6);
+    }
+
+    function setEquation(latex){
+      const el = document.getElementById('equationOverlay');
+      el.innerHTML = '\\(' + latex + '\\)';
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise();
       }
     }
 
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('load', revealOnScroll);
+    // drawCharge helper
+    function drawCharge(p,q){
+      const s = screen(p.x,p.y);
+      ctx.fillStyle = q>0? 'rgba(255,120,120,0.95)':'rgba(120,160,255,0.95)';
+      ctx.beginPath(); ctx.arc(s.x,s.y,10,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font='12px monospace';
+      ctx.fillText(q>0?`+${q}`:`${q}`, s.x-8, s.y+4);
+    }
+
+    // Problems
+    const problems = {
+      sine: {
+        title:'Sine Wave',
+        vars:{
+          amplitude:{min:0.5,max:5,step:0.1,value:2},
+          frequency:{min:0.2,max:6,step:0.1,value:1},
+          phase:{min:0,max:6.283,step:0.01,value:0}
+        },
+        draw: ({vars,t})=>{
+          drawGrid();
+          ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath();
+          for(let px = -W/2; px <= W/2; px += 1){
+            const x = px/scale;
+            const y = vars.amplitude * Math.sin(vars.frequency * x + vars.phase + t*2);
+            const s = screen(x,y);
+            if (px === -W/2) ctx.moveTo(s.x,s.y); else ctx.lineTo(s.x,s.y);
+          }
+          ctx.stroke();
+          setEquation(`y=${vars.amplitude}\\sin(${vars.frequency}x+${vars.phase.toFixed(2)})`);
+        }
+      },
+
+      quadratic: {
+        title:'Quadratic',
+        vars:{
+          a:{min:-3,max:3,step:0.025,value:1},
+          b:{min:0,max:5,step:0.05,value:0},
+          c:{min:-5,max:5,step:0.05,value:-4}
+        },
+        draw: ({vars})=>{
+          drawGrid();
+          ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath();
+          for(let x=-10; x<=10; x+=0.02){
+            const y = vars.a*x*x + vars.b*x + vars.c;
+            const s = screen(x,y);
+            if (x === -10) ctx.moveTo(s.x,s.y); else ctx.lineTo(s.x,s.y);
+          }
+          ctx.stroke();
+          setEquation(`y=${vars.a}x^{2}+${vars.b}x+${vars.c}`);
+          const A = vars.a, B = vars.b, C = vars.c;
+          if (A !== 0){
+            const xv = -B/(2*A);
+            const yv = A*xv*xv + B*xv + C;
+            annotatePoint(xv,yv,`V(${xv.toFixed(2)},${yv.toFixed(2)})`);
+            const disc = B*B - 4*A*C;
+            if (disc >= 0){
+              const r1 = (-B + Math.sqrt(disc)) / (2*A);
+              const r2 = (-B - Math.sqrt(disc)) / (2*A);
+              annotatePoint(r1,0,`(${r1.toFixed(2)},0)`);
+              annotatePoint(r2,0,`(${r2.toFixed(2)},0)`);
+            }
+          }
+        }
+      },
+
+      projectile: {
+        title:'Projectile Motion',
+        vars:{
+          velocity:{min:5,max:10,step:1,value:10},
+          angle:{min:40,max:70,step:1,value:66},
+          g:{min:5,max:15,step:0.1,value:9.8}
+        },
+        draw: ({vars})=>{
+          drawGrid();
+          const v = vars.velocity, th = vars.angle * Math.PI/180, g = vars.g;
+          const vx = v*Math.cos(th), vy = v*Math.sin(th);
+
+          // compute raw trajectory (unshifted)
+          let raw = [];
+          for (let tt = 0; tt < 20; tt += 0.02){
+            const x = vx*tt;
+            const y = vy*tt - 0.5*g*tt*tt;
+            raw.push({x,y});
+            if (y < -5) break;
+          }
+          while (raw.length && raw[raw.length-1].y < 0) raw.pop();
+          if (raw.length < 2) raw = [{x:0,y:0},{x:0,y:0}];
+
+          // shift so midpoint is centered at x=0
+          const xMid = (raw[0].x + raw[raw.length-1].x) / 2;
+          const pts = raw.map(p => ({ x: p.x - xMid, y: p.y }));
+
+          // draw
+          ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.beginPath();
+          pts.forEach((p,i)=>{
+            const s = screen(p.x,p.y); if (i === 0) ctx.moveTo(s.x,s.y); else ctx.lineTo(s.x,s.y);
+          }); ctx.stroke();
+
+          // animate ball along timeline
+          const flightT = (raw.length - 1) * 0.02;
+          const elapsed = (Date.now() - animStart) / 1000;
+          const tplay = Math.min(elapsed, flightT);
+          const idx = Math.floor(tplay / 0.02);
+          const frac = (tplay % 0.02) / 0.02;
+          const p1 = pts[Math.max(0, Math.min(idx, pts.length-1))] || pts[0];
+          const p2 = pts[Math.max(0, Math.min(idx+1, pts.length-1))] || pts[pts.length-1];
+          const bx = p1.x + (p2.x - p1.x)*frac;
+          const by = p1.y + (p2.y - p1.y)*frac;
+          const b = screen(bx,by);
+          // draw ball
+          ctx.fillStyle = '#ffd48b';
+          ctx.beginPath(); ctx.arc(b.x, b.y, 8, 0, Math.PI*2); ctx.fill();
+
+          // annotate
+          const s0 = pts[0], sE = pts[pts.length-1];
+          annotatePoint(s0.x, s0.y, `Start (${s0.x.toFixed(2)},${s0.y.toFixed(2)})`);
+          annotatePoint(sE.x, sE.y, `End (${sE.x.toFixed(2)},${sE.y.toFixed(2)})`);
+          setEquation(`x(t)=${(vx).toFixed(2)}t - ${xMid.toFixed(2)},\\quad y(t)=${(vy).toFixed(2)}t-\\tfrac{1}{2}${g}t^{2}`);
+        }
+      },
+
+      circle: {
+        title:'Circle Geometry',
+        vars:{ R:{min:10,max:200,step:1,value:80} },
+        draw: ({vars})=>{
+          drawGrid();
+          ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+          const c = screen(0,0);
+          ctx.beginPath(); ctx.arc(c.x, c.y, vars.R, 0, Math.PI*2); ctx.stroke();
+          setEquation(`x^{2}+y^{2}=${(vars.R*vars.R).toFixed(0)}`);
+          annotatePoint(vars.R/scale, 0, `(${vars.R.toFixed(1)},0)`);
+        }
+      },
+
+      harmonic: {
+        title:'Simple Harmonic Motion',
+        vars:{ A:{min:1,max:7.5,step:0.1,value:4}, omega:{min:0.5,max:5,step:0.1,value:1.4} },
+        draw: ({vars,t})=>{
+          drawGrid();
+          const x = vars.A * Math.cos(vars.omega * t);
+          const s = screen(x,0);
+          ctx.fillStyle = '#ffd6e0';
+          ctx.beginPath(); ctx.arc(s.x,s.y,10,0,Math.PI*2); ctx.fill();
+          setEquation(`x(t)=${vars.A}\\cos(${vars.omega}t)`);
+        }
+      },
+
+      electric: {
+        title:'Electric Field (point charges)',
+        vars:{
+          q1:{min:-10,max:10,step:1,value:1},
+          q2:{min:-10,max:10,step:1,value:-1},
+          sep:{min:20,max:200,step:1,value:120}
+        },
+        draw: ({vars})=>{
+          drawGrid();
+          const sepUnits = vars.sep / scale;
+          const p1 = {x: -sepUnits/2, y:0}, p2 = {x: sepUnits/2, y:0};
+          drawCharge(p1, vars.q1); drawCharge(p2, vars.q2);
+
+          for (let gx = -10; gx <= 10; gx += 0.7){
+            for (let gy = -6; gy <= 6; gy += 0.7){
+              let Ex = 0, Ey = 0;
+              const rx = gx, ry = gy;
+              [{x:p1.x,y:p1.y,q:vars.q1},{x:p2.x,y:p2.y,q:vars.q2}].forEach(c=>{
+                const dx = rx - c.x, dy = ry - c.y;
+                const r2 = dx*dx + dy*dy + 0.001;
+                const inv = c.q / (r2);
+                Ex += inv * dx; Ey += inv * dy;
+              });
+              const mag = Math.sqrt(Ex*Ex + Ey*Ey);
+              if (mag > 0){
+                const nx = Ex/mag, ny = Ey/mag;
+                const s0 = screen(rx,ry);
+                ctx.strokeStyle = 'rgba(170,176,255,0.7)';
+                ctx.beginPath();
+                ctx.moveTo(s0.x, s0.y);
+                ctx.lineTo(s0.x + nx*12, s0.y - ny*12);
+                ctx.stroke();
+              }
+            }
+          }
+          setEquation(`\\vec{E}(\\vec{r})=k\\sum_{i}\\frac{q_{i}}{|\\vec{r}-\\vec{r_{i}}|^{2}}\\hat{r}`);
+        }
+      }
+    };
+
+    /* ---------- UI Build ---------- */
+    const selector = document.getElementById('problemSelector');
+
+    Object.keys(problems).forEach((k,i) => {
+      const btn = document.createElement('div');
+      btn.className = 'problem-btn' + (k === current ? ' active' : '');
+      btn.textContent = problems[k].title;
+      btn.onclick = () => {
+        document.querySelectorAll('.problem-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        current = k;
+        buildSidebar();
+        resetAnim();
+      };
+      selector.appendChild(btn);
+    });
+
+    function buildSidebar(){
+      const sb = document.getElementById('sidebar');
+      sb.innerHTML = '';
+      const P = problems[current];
+      const h = document.createElement('h4'); h.innerText = P.title;
+      sb.appendChild(h);
+
+      const wrap = document.createElement('div');
+      for (const k in P.vars){
+        const o = P.vars[k];
+        const block = document.createElement('div'); block.className = 'slider-block';
+        block.innerHTML = `<div class='slider-row'><div>${k}</div><div id='val-${k}'>${o.value}</div></div>
+          <div class='range-wrap'><div class='range-fill' id='fill-${k}'></div>
+          <input id='rng-${k}' type='range' min='${o.min}' max='${o.max}' step='${o.step}' value='${o.value}'></div>`;
+        wrap.appendChild(block);
+      }
+      sb.appendChild(wrap);
+
+      for (const k in P.vars){
+        const inp = document.getElementById('rng-'+k);
+        if (!inp) continue;
+        inp.addEventListener('input', e=>{
+          problems[current].vars[k].value = parseFloat(e.target.value);
+          document.getElementById('val-'+k).innerText = e.target.value;
+          updateFill(k);
+          resetAnim();
+        });
+        updateFill(k);
+      }
+    }
+
+    function updateFill(k){
+      const r = document.getElementById('rng-'+k);
+      if (!r) return;
+      const pct = (r.value - r.min) / (r.max - r.min) * 100;
+      const f = document.getElementById('fill-'+k);
+      if (f) f.style.width = pct + '%';
+    }
+
+    function resetAnim(){ animStart = Date.now(); }
+
+    // Initialize sidebar & fills
+    buildSidebar();
+    resetAnim();
+    Object.keys(problems[current].vars).forEach(updateFill);
+
+    /* ---------- Main Loop ---------- */
+    function loop(){
+      // ensure canvas size matches displayed size if something changed (handles orientation changes)
+      const rect = canvas.getBoundingClientRect();
+      if (canvas.width !== Math.floor(rect.width) || canvas.height !== Math.floor(rect.height)) {
+        vizResize();
+      }
+
+      ctx.clearRect(0,0,W,H);
+      const P = problems[current];
+      const vars = Object.fromEntries(Object.entries(P.vars).map(([k,v]) => [k, v.value]));
+      try { P.draw({vars, t: time}); } catch(e){ console.error(e); }
+      time += 0.02;
+      requestAnimationFrame(loop);
+    }
+
+    // kickoff
+    loop();
+
+    /* ---------- MathJax initial typeset (best-effort) ---------- */
+    if (window.MathJax && window.MathJax.startup) {
+      MathJax.startup.promise.then(() => MathJax.typesetPromise()).catch(()=>{});
+    }
+
+    // ensure visualizer is correctly sized at load
+    window.addEventListener('load', () => { vizResize(); buildSidebar(); });
   </script>
 </body>
 </html>
