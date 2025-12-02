@@ -246,6 +246,11 @@
     <h2>Contributors</h2>
     <div class="people-grid" id="contrib-grid"></div>
   </section>
+  <section>
+    <h2>Acknowledgement</h2>
+    <div class="people-grid" id="acknowledgement"></div>
+  </section>
+
   <section id="section-register" class="story-section text-center">
       <div id="register-card" class="interactive-card" data-scroll-anim>
             <h2 class="text-5xl md:text-7xl font-bold text-white mb-6 text-hover-lift">
@@ -356,11 +361,15 @@ const contributors = [
   {name: 'Klomann', contrib: 'Manim Content Creator & Content Library Contributor', color: '#21ebe8'}
 
 ];
+const akc = [
+  {name: 'Vrushal Modh', role: 'Ex Frontend Design Contributor', color: '#a9a9a9'},
+];
 
 createCards('features-grid', features);
 createCards('plans-grid', plans);
 loadPeople('team-grid', team);
 loadPeople('contrib-grid', contributors);
+loadPeople('acknowledgement', akc);
 observeCards();
 (function() {
            emailjs.init({
